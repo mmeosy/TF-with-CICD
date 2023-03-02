@@ -12,34 +12,52 @@ jobs:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+      ARM_TENANT_ID:   ${{ secrets.AZURE_AD_TENANT_ID }}
     runs-on: ubuntu-latest
+    
 
 
     defaults:
       run:
         shell: bash
         working-directory: terraform
+
     steps:
-    - uses: actions/checkout@v3
-    - uses: hashicorp/setup-terraform@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Terraform fmt
-      id: fmt
-      run: terraform fmt -check
-      continue-on-error: true
-
-    - name: Terraform Init
-      id: init
-      run: terraform init
-
-    - name: Terraform Validate
-      id: validate
-      run: terraform validate -no-color
-
-    - name: Terraform Plan
-      id: plan
-      run: terraform plan -no-color
+      - name: 'Terraform Format'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+         tf_actions_version: 0.14.8
+         tf_actions_subcommand: 'fmt'
+         tf_actions_working_dir: "./terraform"
+      - name: 'Terraform Init'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+            tf_actions_version: 0.14.8
+            tf_actions_subcommand: 'init'
+            tf_actions_working_dir: "./terraform"
+      - name: 'Terraform Plan'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+            tf_actions_version: 0.14.8
+            tf_actions_subcommand: 'plan'
+            tf_actions_working_dir: "./terraform"
+      - name: 'Terraform Apply'
+        if: github.ref == 'refs/heads/main'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: 0.14.8
+          tf_actions_subcommand: 'apply'
+          tf_actions_working_dir: "./terraform"
+      - name: 'Terraform Destroy'
+        if: github.ref == 'refs/heads/main'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+            tf_actions_version: 0.14.8
+            tf_actions_subcommand: 'destroy'
+            tf_actions_working_dir: "./terraform"
     
 
 
