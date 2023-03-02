@@ -5,8 +5,13 @@ on:
     branches:
       - main
 
+    
 jobs:
   terraform:
+    defaults:
+        run:
+          shell: bash
+          working-directory: terraform
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
