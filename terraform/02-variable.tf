@@ -11,11 +11,11 @@ variable "subscription_id_value" {
 }
 
 variable "client_id_value" {
-  default = "8e572887-e2a3-44ee-bb52-1f2917b71367"
+  default = "4aca4770-0036-4991-9bda-f4bd5ba549b5"
 }
 
 variable "client_secret_value" {
-  default = "hcW8Q~Sx5FDDCoYtR-Q4PDeD25ojHaGIpC4Ygagx"
+  default = "Cpc8Q~S.Wc5jMgaDfCbKx1bBwk9kWi46ESla1bHQ"
 }
 
 variable "tenant_id_value" {
