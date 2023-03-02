@@ -23,4 +23,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: list resource group list
-        run: az group list
+        run: az login
